@@ -23,6 +23,106 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--secondary-color);
+            overflow-x: hidden;
+        }
+
+        /* ==================== 名画开场页样式 ==================== */
+        .landing-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .landing-page.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* 名画容器 - 用梵高《星月夜》，你也可以换成自己喜欢的 */
+        .painting-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 70vh;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .painting-container img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 名画信息（可选，增加质感） */
+        .painting-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: #fff;
+            padding: 2rem 1.5rem 1rem;
+            text-align: center;
+        }
+
+        .painting-title {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 0.3rem;
+            letter-spacing: 1px;
+        }
+
+        .painting-author {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* 预约按钮 */
+        .booking-btn-landing {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+            padding: 14px 48px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .booking-btn-landing:hover {
+            background: var(--white);
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
+        }
+
+        /* ==================== 原网页内容样式 ==================== */
+        .main-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* 头部导航 */
@@ -129,21 +229,20 @@
             color: var(--primary-color);
         }
 
-       /* 金数据表单容器 - 优化融合感 */
+        /* 金数据表单容器 - 优化融合感 */
         .jinshuju-wrapper {
             width: 100%;
             overflow: hidden;
-            border-radius: 12px; /* 加圆角，和网页整体风格一致 */
-            box-shadow: 0 2px 8px rgba(107, 155, 209, 0.1); /* 加淡淡的蓝色阴影 */
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(107, 155, 209, 0.1);
             background: #ffffff;
         }
 
-        /* 调整iframe本身的样式 */
         .jinshuju-wrapper iframe {
             display: block;
             border: none;
             width: 100% !important;
-            height: 1450px !important; /* 稍微加高一点，避免出现滚动条 */
+            height: 1450px !important;
         }
 
         /* 移动端适配 */
@@ -152,48 +251,82 @@
             .hero-text h1 { font-size: 2rem; }
             .nav-links { display: none; }
             .form-container { padding: 1.5rem; }
+            .painting-info { display: none; }
+            .booking-btn-landing { padding: 12px 36px; font-size: 1rem; }
         }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <header>
-        <nav>
-            <div class="logo">🌿 心灵港湾</div>
-            <div class="nav-links">
-                <a href="#home">首页</a>
-                <a href="#about">关于我们</a>
-                <a href="#booking">预约咨询</a>
-            </div>
-        </nav>
-    </header>
-
-    <!-- 主视觉区 -->
-    <section class="hero" id="home">
-        <div class="hero-text">
-            <h1>倾听你的心声</h1>
-            <p>在这里，你可以安全地表达自己。我们用专业与陪伴，助你走出心灵的迷雾。</p>
-            <a href="#booking" class="btn">立即预约</a>
-        </div>
-        <div class="hero-image">
-            <svg width="300" height="200" viewBox="0 0 300 200">
-                <rect width="300" height="200" fill="#eef5ff" rx="20"/>
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#6b9bd1" font-size="20">心灵插画</text>
-            </svg>
-        </div>
-    </section>
-
-    <!-- 预约表单区 - 已直接放入你复制的金数据代码 -->
-    <section class="booking-section" id="booking">
-        <div class="form-container">
-            <h2>预约咨询</h2>
-            <div class="jinshuju-wrapper">
-                <!-- 👇 这是你提供的金数据代码，已直接放入 👇 -->
-                <iframe id="goldendata_form_U8tRM9" src="https://jsj.top/f/U8tRM9?background=white&banner=show&embedded=true&inner_redirect=false" width="100%" frameborder=0 allowTransparency="true" height="1428"></iframe>
+    <!-- ==================== 名画开场页 ==================== -->
+    <div class="landing-page" id="landingPage">
+        <div class="painting-container">
+            <!-- 梵高《星月夜》，你也可以换成其他名画的图片链接 -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="星月夜 - 梵高">
+            <div class="painting-info">
+                <div class="painting-title">The Starry Night · 星月夜</div>
+                <div class="painting-author">Vincent van Gogh · 1889</div>
             </div>
         </div>
-    </section>
+        <button class="booking-btn-landing" id="startBookingBtn">开始预约</button>
+    </div>
 
-    <!-- 已完全清理旧的表单和JS代码，无任何残留 -->
+    <!-- ==================== 原网页主内容 ==================== -->
+    <div class="main-content" id="mainContent">
+        <!-- 导航栏 -->
+        <header>
+            <nav>
+                <div class="logo">🌿 心灵港湾</div>
+                <div class="nav-links">
+                    <a href="#home">首页</a>
+                    <a href="#about">关于我们</a>
+                    <a href="#booking">预约咨询</a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- 主视觉区 -->
+        <section class="hero" id="home">
+            <div class="hero-text">
+                <h1>倾听你的心声</h1>
+                <p>在这里，你可以安全地表达自己。我们用专业与陪伴，助你走出心灵的迷雾。</p>
+                <a href="#booking" class="btn">立即预约</a>
+            </div>
+            <div class="hero-image">
+                <svg width="300" height="200" viewBox="0 0 300 200">
+                    <rect width="300" height="200" fill="#eef5ff" rx="20"/>
+                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#6b9bd1" font-size="20">心灵插画</text>
+                </svg>
+            </div>
+        </section>
+
+        <!-- 预约表单区 -->
+        <section class="booking-section" id="booking">
+            <div class="form-container">
+                <h2>预约咨询</h2>
+                <div class="jinshuju-wrapper">
+                    <iframe id="goldendata_form_U8tRM9" src="https://jsj.top/f/U8tRM9?background=white&banner=show&embedded=true&inner_redirect=false" width="100%" frameborder=0 allowTransparency="true" height="1428"></iframe>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 平滑切换逻辑 -->
+    <script>
+        const landingPage = document.getElementById('landingPage');
+        const mainContent = document.getElementById('mainContent');
+        const startBookingBtn = document.getElementById('startBookingBtn');
+
+        // 点击预约按钮
+        startBookingBtn.addEventListener('click', function() {
+            // 隐藏开场页
+            landingPage.classList.add('hidden');
+            // 显示主内容
+            mainContent.classList.add('visible');
+            // 2秒后移除开场页的DOM，释放资源
+            setTimeout(() => {
+                landingPage.style.display = 'none';
+            }, 2000);
+        });
+    </script>
 </body>
 </html>
