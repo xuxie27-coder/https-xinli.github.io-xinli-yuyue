@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心灵港湾 - 心理咨询预约</title>
+    <style>
+        :root {
+            --primary-color: #6b9bd1; /* 温和的蓝色，带来安全感 */
+            --secondary-color: #f0f7ff;
+            --accent-color: #e6a23c;
+            --text-color: #333;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+        }
+
+        /* 头部导航 */
+        header {
+            background-color: var(--white);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* 主视觉区域 */
+        .hero {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-text h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #5a8bc7;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* 预约表单区域 */
+        .booking-section {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 1rem;
+        }
+
+        .form-container {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        /* 成功提示模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            animation: popIn 0.3s ease;
+        }
+
+        .check-icon {
+            font-size: 4rem;
+            color: #67c23a;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 600px) {
+            .hero { padding: 2rem; }
+            .hero-text h1 { font-size: 2rem; }
+            .form-row { flex-direction: column; gap: 0; }
+            .nav-links { display: none; } /* 移动端简化隐藏导航 */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <header>
+        <nav>
+            <div class="logo">🌿 心灵港湾</div>
+            <div class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#about">关于我们</a>
+                <a href="#booking">预约咨询</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主视觉区 -->
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <h1>倾听你的心声</h1>
+            <p>在这里，你可以安全地表达自己。我们用专业与陪伴，助你走出心灵的迷雾。</p>
+            <a href="#booking" class="btn">立即预约</a>
+        </div>
+        <div class="hero-image">
+            <!-- 这里可以放一张图片，为了演示用色块代替 -->
+            <svg width="300" height="200" viewBox="0 0 300 200">
+                <rect width="300" height="200" fill="#eef5ff" rx="20"/>
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#6b9bd1" font-size="20">心灵插画</text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- 预约表单区 -->
+    <section class="booking-section" id="booking">
+        <div class="form-container">
+            <h2>预约咨询</h2>
+            <form id="appointmentForm">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="name">您的姓名</label>
+                            <input type="text" id="name" name="name" placeholder="请输入姓名" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="phone">联系电话</label>
+                            <input type="tel" id="phone" name="phone" placeholder="请输入手机号" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">电子邮箱 (选填)</label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="date">预约日期</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="time">预约时段</label>
+                            <select id="time" name="time" required>
+                                <option value="" disabled selected>请选择时段</option>
+                                <option value="morning">上午 (9:00-12:00)</option>
+                                <option value="afternoon">下午 (14:00-17:00)</option>
+                                <option value="evening">晚间 (19:00-21:00)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">咨询方向</label>
+                    <select id="type" name="type" required>
+                        <option value="" disabled selected>请选择咨询类型</option>
+                        <option value="anxiety">情绪管理/焦虑抑郁</option>
+                        <option value="relationship">人际关系/亲密关系</option>
+                        <option value="career">职业发展/职场压力</option>
+                        <option value="other">其他</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">想对咨询师说的话 (选填)</label>
+                    <textarea id="message" name="message" rows="4" placeholder="可以简单描述您目前的困扰，我们会严格保密..."></textarea>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%; font-size: 1.1rem;">提交预约</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 成功提示模态框 -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="check-icon">✓</div>
+            <h3>预约提交成功！</h3>
+            <p>我们的工作人员会在24小时内与您联系确认。</p>
+            <button class="btn" onclick="closeModal()">好的</button>
+        </div>
+    </div>
+
+    <script>
+        // 简单的交互逻辑
+        const form = document.getElementById('appointmentForm');
+        const modal = document.getElementById('successModal');
+
+        // 1. 设置日期选择器的最小值为今天
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+
+        // 2. 监听表单提交事件
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // 阻止表单默认的页面跳转
+
+            // 这里可以添加AJAX请求发送数据到服务器
+            // 现在仅做前端演示，直接显示成功
+            
+            showModal();
+            form.reset(); // 清空表单
+        });
+
+        function showModal() {
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // 点击模态框外部也可以关闭
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
