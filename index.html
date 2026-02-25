@@ -6,9 +6,8 @@
     <title>心灵港湾 - 心理咨询预约</title>
     <style>
         :root {
-            --primary-color: #6b9bd1; /* 温和的蓝色，带来安全感 */
+            --primary-color: #6b9bd1;
             --secondary-color: #f0f7ff;
-            --accent-color: #e6a23c;
             --text-color: #333;
             --white: #ffffff;
         }
@@ -110,10 +109,6 @@
             transform: translateY(-2px);
         }
 
-        .btn:active {
-            transform: translateY(0);
-        }
-
         /* 预约表单区域 */
         .booking-section {
             max-width: 800px;
@@ -134,20 +129,18 @@
             color: var(--primary-color);
         }
 
-        /* 适配金数据表单的样式 */
-        .jinshuju-form {
+        /* 金数据表单容器 - 完全适配你的代码 */
+        .jinshuju-wrapper {
             width: 100%;
-            min-height: 1428px; /* 匹配你嵌入脚本里的height */
-            overflow: hidden; /* 防止滚动条错乱 */
+            overflow: hidden;
         }
 
         /* 移动端适配 */
         @media (max-width: 600px) {
             .hero { padding: 2rem; }
             .hero-text h1 { font-size: 2rem; }
-            .nav-links { display: none; } /* 移动端简化隐藏导航 */
+            .nav-links { display: none; }
             .form-container { padding: 1.5rem; }
-            .jinshuju-form { min-height: 1200px; } /* 移动端适配高度 */
         }
     </style>
 </head>
@@ -172,7 +165,6 @@
             <a href="#booking" class="btn">立即预约</a>
         </div>
         <div class="hero-image">
-            <!-- 这里可以放一张图片，为了演示用色块代替 -->
             <svg width="300" height="200" viewBox="0 0 300 200">
                 <rect width="300" height="200" fill="#eef5ff" rx="20"/>
                 <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#6b9bd1" font-size="20">心灵插画</text>
@@ -180,17 +172,17 @@
         </div>
     </section>
 
-    <!-- 预约表单区 -->
+    <!-- 预约表单区 - 已直接放入你复制的金数据代码 -->
     <section class="booking-section" id="booking">
         <div class="form-container">
             <h2>预约咨询</h2>
-            <!-- 金数据表单容器，确保脚本正常加载 -->
-            <div class="jinshuju-form">
-                <script src="https://jsj.top/f/U8tRM9/embedded.js?inner_redirect=false&banner=show&background=white&height=1428"></script>
+            <div class="jinshuju-wrapper">
+                <!-- 👇 这是你提供的金数据代码，已直接放入 👇 -->
+                <iframe id="goldendata_form_U8tRM9" src="https://jsj.top/f/U8tRM9?background=white&banner=show&embedded=true&inner_redirect=false" width="100%" frameborder=0 allowTransparency="true" height="1428"></iframe>
             </div>
         </div>
     </section>
 
-    <!-- 移除了无用的模态框和原表单JS（金数据自带提交反馈） -->
+    <!-- 已完全清理旧的表单和JS代码，无任何残留 -->
 </body>
 </html>
