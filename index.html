@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>心灵港湾 - 心理咨询预约</title>
+    <title>心灵港湾 - 性少数友好心理咨询</title>
     <style>
         :root {
             --primary-color: #6b9bd1;
@@ -13,6 +13,9 @@
             --white: #ffffff;
             --shadow: 0 10px 30px rgba(0,0,0,0.05);
             --card-shadow: 0 4px 20px rgba(107, 155, 209, 0.1);
+            /* 性少数彩虹渐变 */
+            --rainbow-gradient: linear-gradient(135deg, #FF0018, #FFA52C, #FFFF41, #008018, #0000F9, #86007D);
+            --rainbow-light: linear-gradient(135deg, rgba(255,0,24,0.08), rgba(255,165,44,0.08), rgba(255,255,65,0.08), rgba(0,128,24,0.08), rgba(0,0,249,0.08), rgba(134,0,125,0.08));
         }
 
         * {
@@ -294,20 +297,195 @@
             color: var(--primary-color);
         }
 
-        /* ==================== 页面切换核心样式 ==================== */
+        /* ==================== 页面切换核心样式 - 丝滑过渡 ==================== */
         .page {
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-            padding: 3rem 0;
+            position: absolute;
+            top: 80px; /* 导航栏高度 */
+            left: 0;
+            width: 100%;
             min-height: calc(100vh - 80px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s;
+            padding: 3rem 0;
+            background-color: var(--secondary-color);
         }
 
         .page.active {
-            display: block;
+            position: relative;
             opacity: 1;
+            visibility: visible;
             transform: translateY(0);
+        }
+
+        /* ==================== 【核心美化】咨询类型选择页 - 性少数专属 ==================== */
+        /* 页面专属背景 */
+        #typeSelectPage {
+            background: var(--rainbow-light), linear-gradient(180deg, #f0f7ff 0%, #e6f0ff 100%);
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: calc(100vh - 80px);
+            padding: 2rem 0;
+        }
+
+        /* 标题美化 - 彩虹点缀 */
+        #typeSelectPage .section-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--primary-color), #8a6bd1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .title-desc {
+            text-align: center;
+            color: var(--light-text);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        .rainbow-divider {
+            width: 80px;
+            height: 4px;
+            background: var(--rainbow-gradient);
+            border-radius: 10px;
+            margin: 0 auto 3rem;
+        }
+
+        /* 竖向排列容器 */
+        .type-select-container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* 卡片美化 - 磨砂玻璃+彩虹边框 */
+        .type-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            box-shadow: 0 8px 32px rgba(107, 155, 209, 0.12);
+            overflow: hidden;
+        }
+
+        /* 彩虹边框 */
+        .type-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: var(--rainbow-gradient);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.3;
+            transition: opacity 0.4s ease;
+        }
+
+        /* hover动效 */
+        .type-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(107, 155, 209, 0.2);
+        }
+
+        .type-card:hover::before {
+            opacity: 1;
+        }
+
+        /* 卡片内容布局 */
+        .card-content-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 图标美化 - 彩虹渐变 */
+        .type-icon {
+            font-size: 3.5rem;
+            line-height: 1;
+            flex-shrink: 0;
+            transition: transform 0.4s ease;
+        }
+
+        .type-card:hover .type-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .text-wrapper {
+            flex: 1;
+        }
+
+        .type-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #333, var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.8rem;
+        }
+
+        .type-desc {
+            color: var(--light-text);
+            line-height: 1.8;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* 按钮美化 */
+        .type-card .btn {
+            width: 100%;
+            padding: 14px 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: var(--primary-color);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .type-card .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--rainbow-gradient);
+            transition: left 0.5s ease;
+            opacity: 0.3;
+        }
+
+        .type-card:hover .btn::before {
+            left: 0;
+        }
+
+        .type-card:hover .btn {
+            transform: translateY(0);
+            box-shadow: 0 5px 20px rgba(107, 155, 209, 0.4);
         }
 
         /* ==================== 咨询师列表页 ==================== */
@@ -478,6 +656,149 @@
             left: 0;
         }
 
+        /* ==================== 团体活动列表页 ==================== */
+        .group-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .group-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .group-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(107, 155, 209, 0.18);
+        }
+
+        .group-cover {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+        }
+
+        .group-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .group-card:hover .group-cover img {
+            transform: scale(1.05);
+        }
+
+        .group-info {
+            padding: 1.8rem;
+        }
+
+        .group-tag {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .group-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .group-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+
+        .group-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .group-brief {
+            color: var(--light-text);
+            line-height: 1.5;
+        }
+
+        /* ==================== 团体活动详情页 ==================== */
+        .group-detail {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .group-detail-cover {
+            width: 100%;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .group-detail-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .group-detail-header {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .group-detail-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .group-detail-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .group-detail-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--light-text);
+            font-weight: 500;
+        }
+
+        .group-detail-price {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .group-detail-btns {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
         /* ==================== 预约表单页 ==================== */
         .form-container {
             background: var(--white);
@@ -513,6 +834,11 @@
 
             .nav-links {
                 display: none;
+            }
+
+            .page {
+                top: 70px;
+                min-height: calc(100vh - 70px);
             }
 
             .carousel-container {
@@ -562,6 +888,48 @@
 
             .therapist-list {
                 grid-template-columns: 1fr;
+            }
+
+            /* 移动端类型选择页适配 */
+            #typeSelectPage .section-title {
+                font-size: 2rem;
+            }
+
+            .title-desc {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            .type-card {
+                padding: 2rem 1.5rem;
+                margin: 0 0.5rem;
+            }
+
+            .card-content-wrapper {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .type-title {
+                font-size: 1.6rem;
+                text-align: center;
+            }
+
+            .type-desc {
+                text-align: center;
+            }
+
+            .group-list {
+                grid-template-columns: 1fr;
+            }
+
+            .group-detail-cover {
+                height: 280px;
+            }
+
+            .group-detail-title {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -616,18 +984,62 @@
     <!-- ==================== 头部导航 ==================== -->
     <header>
         <nav>
-            <div class="logo" id="homeLogo">🌿 心灵港湾</div>
+            <div class="logo" id="homeLogo">🏳️‍🌈 心灵港湾</div>
             <div class="nav-links">
-                <a href="#" id="navTherapistList">咨询师团队</a>
+                <a href="#" id="navHome">首页</a>
+                <a href="#" id="navTherapistList">个体咨询</a>
+                <a href="#" id="navGroupList">团体咨询</a>
                 <a href="#about">关于我们</a>
             </div>
         </nav>
     </header>
 
-    <!-- ==================== 咨询师列表页 ==================== -->
-    <div class="page active" id="therapistListPage">
+    <!-- ==================== 【首页分流页】咨询类型选择页（默认激活）==================== -->
+    <div class="page active" id="typeSelectPage">
         <div class="page-container">
-            <h2 class="section-title">专业咨询师团队</h2>
+            <h2 class="section-title">欢迎来到性少数友好咨询空间</h2>
+            <p class="title-desc">在这里，你可以全然地做自己。我们提供安全、保密、无评判的专业心理咨询，陪你走过每一段心路历程</p>
+            <div class="rainbow-divider"></div>
+
+            <div class="type-select-container">
+                <!-- 个体咨询 -->
+                <div class="type-card" id="individualType">
+                    <div class="card-content-wrapper">
+                        <div class="type-icon">🧘‍🌈</div>
+                        <div class="text-wrapper">
+                            <h3 class="type-title">一对一私密个体咨询</h3>
+                            <p class="type-desc">
+                                针对身份认同探索、出柜困扰、亲密关系矛盾、家庭接纳、少数群体压力、情绪内耗、自我价值感低等议题，提供1v1的深度陪伴与专业支持。
+                                在这里，你的所有感受都会被看见、被尊重。
+                            </p>
+                        </div>
+                    </div>
+                    <button class="btn">进入个体咨询</button>
+                </div>
+
+                <!-- 团体咨询 -->
+                <div class="type-card" id="groupType">
+                    <div class="card-content-wrapper">
+                        <div class="type-icon">👥🏳️‍🌈</div>
+                        <div class="text-wrapper">
+                            <h3 class="type-title">同频伙伴团体成长</h3>
+                            <p class="type-desc">
+                                在全性少数成员的安全抱持空间里，和同频伙伴一起探索自我、分享经历、获得支持。
+                                我们开设身份认同、亲密关系、出柜成长等主题团体，在联结中获得疗愈与成长的力量。
+                            </p>
+                        </div>
+                    </div>
+                    <button class="btn">进入团体咨询</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 咨询师列表页（个体咨询流程） ==================== -->
+    <div class="page" id="therapistListPage">
+        <div class="page-container">
+            <div class="back-btn" id="backToHomeFromTherapist">‹ 返回首页</div>
+            <h2 class="section-title">性少数友好咨询师团队</h2>
             <div class="therapist-list">
                 <!-- 咨询师1 -->
                 <div class="therapist-card" data-id="1">
@@ -636,8 +1048,8 @@
                     </div>
                     <div class="card-info">
                         <h3 class="card-name">林知夏</h3>
-                        <div class="card-school">心理动力学取向 | 注册系统心理师</div>
-                        <p class="card-desc">12年临床咨询经验，擅长情绪困扰、创伤疗愈、亲密关系修复，累计个案时长10000+小时</p>
+                        <div class="card-school">心理动力学取向 | 注册系统心理师 | 性少数友好咨询师</div>
+                        <p class="card-desc">12年临床咨询经验，深耕性少数群体议题，累计个案时长10000+小时，风格抱持包容</p>
                     </div>
                 </div>
 
@@ -648,8 +1060,8 @@
                     </div>
                     <div class="card-info">
                         <h3 class="card-name">陈越</h3>
-                        <div class="card-school">人本主义 | 婚姻家庭咨询师</div>
-                        <p class="card-desc">8年咨询经验，聚焦情绪疏导、人际关系、家庭矛盾与婚恋困扰，风格温暖包容，累计个案时长6000+小时</p>
+                        <div class="card-school">人本主义取向 | 婚姻家庭咨询师 | 性少数友好咨询师</div>
+                        <p class="card-desc">8年咨询经验，专注亲密关系、家庭议题，为性少数伴侣提供专业支持，风格温暖坚定</p>
                     </div>
                 </div>
 
@@ -660,28 +1072,49 @@
                     </div>
                     <div class="card-info">
                         <h3 class="card-name">苏哲</h3>
-                        <div class="card-school">认知行为CBT | 注册心理师</div>
-                        <p class="card-desc">10年临床经验，前三甲医院心理科咨询师，擅长焦虑抑郁、职场压力、社交恐惧，短程聚焦解决问题</p>
+                        <div class="card-school">认知行为CBT | 注册心理师 | 性少数友好咨询师</div>
+                        <p class="card-desc">10年临床经验，擅长情绪障碍、职场压力、少数群体身份焦虑，短程聚焦解决问题</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ==================== 咨询师详情页 ==================== -->
+    <!-- ==================== 咨询师详情页（个体咨询流程） ==================== -->
     <div class="page" id="therapistDetailPage">
         <div class="page-container">
-            <div class="back-btn" id="backToList">‹ 返回咨询师列表</div>
+            <div class="back-btn" id="backToTherapistList">‹ 返回咨询师列表</div>
             <div class="therapist-detail" id="detailContent">
                 <!-- 详情内容由JS动态生成 -->
             </div>
         </div>
     </div>
 
-    <!-- ==================== 预约表单页 ==================== -->
+    <!-- ==================== 团体活动列表页（团体咨询流程） ==================== -->
+    <div class="page" id="groupListPage">
+        <div class="page-container">
+            <div class="back-btn" id="backToHomeFromGroup">‹ 返回首页</div>
+            <h2 class="section-title">性少数主题成长团体</h2>
+            <div class="group-list" id="groupListContainer">
+                <!-- 团体活动由JS动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 团体活动详情页（团体咨询流程） ==================== -->
+    <div class="page" id="groupDetailPage">
+        <div class="page-container">
+            <div class="back-btn" id="backToGroupList">‹ 返回团体活动</div>
+            <div class="group-detail" id="groupDetailContent">
+                <!-- 团体详情由JS动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 预约表单页（最终预约） ==================== -->
     <div class="page" id="bookingFormPage">
         <div class="page-container">
-            <div class="back-btn" id="backToDetail">‹ 返回咨询师主页</div>
+            <div class="back-btn" id="backToPrev">‹ 返回</div>
             <h2 class="section-title">预约咨询</h2>
             <div class="form-container">
                 <div class="jinshuju-wrapper">
@@ -692,7 +1125,8 @@
     </div>
 
     <script>
-        // ==================== 咨询师数据 ====================
+        // ==================== 数据定义 ====================
+        // 咨询师数据
         const therapistData = [
             {
                 id: 1,
@@ -705,9 +1139,11 @@
                     "国家二级心理咨询师",
                     "中国心理学会注册系统注册心理师",
                     "中美精神分析联盟（CAPA）高级组毕业",
-                    "北京大学临床心理学硕士"
+                    "北京大学临床心理学硕士",
+                    "性少数群体议题专项受训背景"
                 ],
                 goodAt: [
+                    "性少数身份认同探索、出柜困扰与家庭接纳议题",
                     "抑郁、焦虑、强迫等情绪困扰疏导",
                     "童年创伤、原生家庭关系疗愈",
                     "亲密关系、婚姻情感矛盾修复",
@@ -716,10 +1152,11 @@
                 training: [
                     "中美精神分析联盟（CAPA）高级组、督导组系统培训",
                     "创伤聚焦治疗（TF-CBT）连续培训",
+                    "性少数群体心理咨询专项系统培训",
                     "依恋理论与夫妻治疗系统培训",
                     "持续接受个人分析与个体督导，督导时长2000+小时"
                 ],
-                desc: "我始终相信，每个人都拥有自我疗愈的力量。咨询中，我会以抱持、中立的态度，陪你看见潜意识的模式，理解情绪背后的需求，在安全的咨访关系里，和你一起探索走出困境的路径。"
+                desc: "我始终相信，每个人都拥有自我疗愈的力量。作为一名性少数友好咨询师，我会以抱持、中立、无评判的态度，陪你看见身份认同中的困惑，理解情绪背后的需求，在安全的咨访关系里，和你一起探索走出困境的路径。"
             },
             {
                 id: 2,
@@ -732,21 +1169,24 @@
                     "国家二级心理咨询师",
                     "国家二级婚姻家庭咨询师",
                     "国际聚焦取向治疗师（FOT）",
-                    "中国心理卫生协会会员"
+                    "中国心理卫生协会会员",
+                    "性少数伴侣关系专项受训"
                 ],
                 goodAt: [
+                    "性少数伴侣亲密关系、矛盾冲突、关系经营",
                     "情绪压力、孤独感、低自尊疏导",
-                    "恋爱关系、婚姻矛盾、婚外情、分手疗愈",
-                    "亲子关系、家庭冲突、婆媳矛盾调解",
+                    "恋爱关系、分手疗愈、自我价值探索",
+                    "亲子关系、家庭冲突、出柜后的家庭沟通",
                     "人际关系、社交边界、职场沟通困扰"
                 ],
                 training: [
                     "国际聚焦取向治疗师连续3年系统培训",
                     "萨提亚家庭治疗系统培训",
                     "非暴力沟通（NVC）师资培训",
+                    "性少数群体婚姻家庭议题专项培训",
                     "持续接受个体督导与团体督导"
                 ],
-                desc: "我的咨询风格温暖、包容且不评判，我相信每个人都是自己问题的专家。我会陪你看见自己的感受和需求，帮你梳理关系中的卡点，找到属于你自己的力量，在关系里既能真诚表达，也能守住边界。"
+                desc: "我的咨询风格温暖、包容且不评判，我相信每个人都是自己问题的专家。作为性少数友好咨询师，我会陪你看见自己的感受和需求，帮你梳理关系中的卡点，找到属于你自己的力量，在关系里既能真诚表达，也能守住边界。"
             },
             {
                 id: 3,
@@ -759,21 +1199,118 @@
                     "中国心理学会注册系统注册心理师",
                     "前三甲医院心理科专职心理咨询师",
                     "中国心理卫生协会CBT专业委员会委员",
-                    "北京师范大学心理学硕士"
+                    "北京师范大学心理学硕士",
+                    "性少数群体心理健康专项受训"
                 ],
                 goodAt: [
+                    "性少数群体职场压力、身份焦虑、社交恐惧",
                     "焦虑症、抑郁症、强迫症等情绪障碍干预",
-                    "社交恐惧、职场压力、学业压力疏导",
                     "失眠、拖延等行为问题调整",
-                    "青少年心理问题、亲子关系咨询"
+                    "青少年心理问题、亲子关系咨询",
+                    "短程聚焦问题解决，提升心理弹性"
                 ],
                 training: [
                     "中国-贝克认知行为治疗研究院系统培训",
                     "正念认知治疗（MBCT）连续培训",
                     "青少年情绪与行为问题干预专项培训",
+                    "性少数群体心理健康与危机干预专项培训",
                     "持续接受CBT专项督导与个人体验"
                 ],
-                desc: "我的咨询风格清晰、务实、结构化，擅长用循证的CBT方法，帮你快速识别情绪和行为的卡点，建立更适配的思维模式，用可落地的方法解决当下的困扰，同时提升你应对未来问题的心理能力。"
+                desc: "我的咨询风格清晰、务实、结构化，擅长用循证的CBT方法，帮你快速识别情绪和行为的卡点，建立更适配的思维模式，用可落地的方法解决当下的困扰。作为性少数友好咨询师，我会充分尊重你的身份与选择，陪你一起应对生活中的挑战。"
+            }
+        ];
+
+        // 团体活动数据
+        const groupData = [
+            {
+                id: 1,
+                name: "性少数身份认同成长小组",
+                cover: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                tag: "正在招募",
+                time: "每周三晚 19:00-21:00",
+                duration: "8周 · 共16小时",
+                size: "8-10人封闭式小组",
+                price: "2400元/人",
+                leader: "林知夏",
+                brief: "探索身份认同，接纳真实自我，在同频伙伴的陪伴中，找到属于自己的力量",
+                detail: "这是一个专为性少数群体开设的封闭式成长小组。在8周的时间里，我们会一起探索身份认同中的困惑与挣扎，面对出柜的焦虑与压力，处理来自家庭、社会的少数群体压力。\n\n在全性少数成员的安全抱持空间里，你可以全然地表达自己，不用伪装、不用解释，获得同频伙伴的理解与支持。我们会一起看见自己的价值，接纳真实的自我，在联结中获得疗愈与成长的力量。",
+                schedule: [
+                    "第1周：团体建立 · 安全空间契约",
+                    "第2周：我的身份故事 · 自我探索",
+                    "第3周：出柜的勇气与困境",
+                    "第4周：家庭关系与沟通",
+                    "第5周：少数群体压力与自我关怀",
+                    "第6周：亲密关系中的身份议题",
+                    "第7周：自我接纳与身份整合",
+                    "第8周：总结与告别 · 未来成长"
+                ],
+                suitable: [
+                    "正在探索自己的性取向/性别身份的伙伴",
+                    "对出柜有困惑、焦虑的伙伴",
+                    "在身份认同中感到孤独、低自尊的伙伴",
+                    "希望和同频伙伴交流，获得支持的性少数群体",
+                    "能够承诺全程参与的伙伴"
+                ]
+            },
+            {
+                id: 2,
+                name: "性少数亲密关系成长小组",
+                cover: "https://images.unsplash.com/photo-1516589178581-6cd7833ae423?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                tag: "即将开组",
+                time: "每周六下午 14:00-16:00",
+                duration: "10周 · 共20小时",
+                size: "6-8人封闭式小组",
+                price: "3200元/人",
+                leader: "陈越",
+                brief: "探索亲密关系的本质，学习经营关系的能力，在安全的空间里看见关系中的自己",
+                detail: "在这个小组里，我们会一起探索性少数群体亲密关系中的独特议题。你会了解自己的依恋类型，看见在关系中重复出现的模式，学习如何与伴侣深度沟通，如何处理关系中的冲突，如何建立一段平等、滋养、长久的亲密关系。\n\n无论你目前是单身、恋爱中，还是有稳定的伴侣，都可以从这个小组中获得收获。我们会在安全的团体氛围中，分享自己的关系故事，获得真实的反馈，学习经营关系的实用方法。",
+                schedule: [
+                    "第1周：团体建立 · 我的关系蓝图",
+                    "第2周：依恋类型与亲密关系",
+                    "第3周：性少数关系中的独特挑战",
+                    "第4周：非暴力沟通 · 关系中的表达",
+                    "第5周：关系中的冲突与和解",
+                    "第6周：亲密与边界 · 关系中的平衡",
+                    "第7周：关系中的性与爱",
+                    "第8周：分手、丧失与疗愈",
+                    "第9周：理想的亲密关系图景",
+                    "第10周：总结与告别 · 带着力量前行"
+                ],
+                suitable: [
+                    "希望探索亲密关系模式的性少数伙伴",
+                    "在关系中遇到困扰，想要提升关系经营能力的伙伴",
+                    "单身，希望为未来的亲密关系做好准备的伙伴",
+                    "想要和同频伙伴交流亲密关系议题的性少数群体",
+                    "能够承诺全程参与的伙伴"
+                ]
+            },
+            {
+                id: 3,
+                name: "性少数职场成长小组",
+                cover: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                tag: "预招募中",
+                time: "每周四晚 19:30-21:30",
+                duration: "6周 · 共12小时",
+                size: "8-12人开放式小组",
+                price: "1800元/人",
+                leader: "苏哲",
+                brief: "应对职场身份焦虑，建立职场边界，在职场中做真实的自己",
+                detail: "职场是性少数群体常常需要面对身份挑战的场景。是否要出柜？如何应对同事的好奇？如何处理职场中的歧视与偏见？如何平衡自我身份与职业发展？\n\n在这个小组里，我们会用认知行为的方法，帮你识别职场中的压力源，学习如何设置合理的职业边界，如何应对职场中的人际困扰，如何在职场中既保护自己，又能做真实的自己，获得职业发展与自我认同的平衡。",
+                schedule: [
+                    "第1周：团体建立 · 我的职场身份故事",
+                    "第2周：职场出柜的选择与策略",
+                    "第3周：职场边界与自我保护",
+                    "第4周：应对偏见与歧视 · 自我关怀",
+                    "第5周：职场人际与沟通技巧",
+                    "第6周：职业发展与身份整合"
+                ],
+                suitable: [
+                    "对职场身份暴露有困惑的性少数伙伴",
+                    "正在经历职场身份焦虑、压力的伙伴",
+                    "希望提升职场沟通能力、建立边界的伙伴",
+                    "想要和同频伙伴交流职场议题的性少数群体",
+                    "可以根据自己的时间灵活参与的伙伴"
+                ]
             }
         ];
 
@@ -841,46 +1378,106 @@
         carousel.addEventListener('mouseenter', stopAutoPlay);
         carousel.addEventListener('mouseleave', startAutoPlay);
 
-        // ==================== 页面切换逻辑 ====================
+        // ==================== 页面切换逻辑 - 丝滑过渡 ====================
         const landingPage = document.getElementById('landingPage');
         const pages = document.querySelectorAll('.page');
         const startBookingBtn = document.getElementById('startBookingBtn');
         const homeLogo = document.getElementById('homeLogo');
+        const navHome = document.getElementById('navHome');
         const navTherapistList = document.getElementById('navTherapistList');
-        const backToList = document.getElementById('backToList');
-        const backToDetail = document.getElementById('backToDetail');
+        const navGroupList = document.getElementById('navGroupList');
+        const backToHomeFromTherapist = document.getElementById('backToHomeFromTherapist');
+        const backToTherapistList = document.getElementById('backToTherapistList');
+        const backToHomeFromGroup = document.getElementById('backToHomeFromGroup');
+        const backToGroupList = document.getElementById('backToGroupList');
+        const backToPrev = document.getElementById('backToPrev');
         const therapistCards = document.querySelectorAll('.therapist-card');
         const detailContent = document.getElementById('detailContent');
+        const groupListContainer = document.getElementById('groupListContainer');
+        const groupDetailContent = document.getElementById('groupDetailContent');
+        const individualType = document.getElementById('individualType');
+        const groupType = document.getElementById('groupType');
 
-        // 切换页面函数
-        function switchPage(pageId) {
-            pages.forEach(page => page.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+        // 记录上一页，用于返回
+        let prevPage = 'typeSelectPage';
+
+        // 切换页面函数 - 丝滑过渡
+        function switchPage(pageId, setPrev = true) {
+            if (setPrev) {
+                const currentActivePage = document.querySelector('.page.active');
+                if (currentActivePage) {
+                    prevPage = currentActivePage.id;
+                }
+            }
+
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            const targetPage = document.getElementById(pageId);
+            // 强制重排，确保过渡生效
+            void targetPage.offsetWidth;
+            targetPage.classList.add('active');
             window.scrollTo(0, 0);
         }
 
-        // 开场页点击开始预约
+        // 设置返回按钮的逻辑
+        function setupBackButton(backBtn, targetPageId) {
+            backBtn.onclick = () => {
+                if (targetPageId) {
+                    switchPage(targetPageId);
+                } else {
+                    switchPage(prevPage);
+                }
+            };
+        }
+
+        // ==================== 核心流程逻辑 ====================
+        // 1. 开场页点击「开始预约」→ 进入【类型选择首页】
         startBookingBtn.addEventListener('click', function() {
             stopAutoPlay();
             landingPage.classList.add('hidden');
             setTimeout(() => {
                 landingPage.style.display = 'none';
             }, 800);
+            switchPage('typeSelectPage', false);
+        });
+
+        // 2. 类型选择页 → 点击「个体咨询」→ 进入咨询师列表页
+        individualType.addEventListener('click', () => {
             switchPage('therapistListPage');
         });
 
-        // 导航栏返回列表
-        homeLogo.addEventListener('click', () => switchPage('therapistListPage'));
+        // 3. 类型选择页 → 点击「团体咨询」→ 进入团体活动列表页
+        groupType.addEventListener('click', () => {
+            renderGroupList();
+            switchPage('groupListPage');
+        });
+
+        // ==================== 导航栏逻辑 ====================
+        homeLogo.addEventListener('click', () => switchPage('typeSelectPage'));
+        navHome.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchPage('typeSelectPage');
+        });
         navTherapistList.addEventListener('click', (e) => {
             e.preventDefault();
             switchPage('therapistListPage');
         });
+        navGroupList.addEventListener('click', (e) => {
+            e.preventDefault();
+            renderGroupList();
+            switchPage('groupListPage');
+        });
 
-        // 返回按钮
-        backToList.addEventListener('click', () => switchPage('therapistListPage'));
-        backToDetail.addEventListener('click', () => switchPage('therapistDetailPage'));
+        // ==================== 返回按钮逻辑 ====================
+        setupBackButton(backToHomeFromTherapist, 'typeSelectPage');
+        setupBackButton(backToTherapistList, 'therapistListPage');
+        setupBackButton(backToHomeFromGroup, 'typeSelectPage');
+        setupBackButton(backToGroupList, 'groupListPage');
+        setupBackButton(backToPrev, null);
 
-        // 点击咨询师卡片，生成详情页
+        // ==================== 个体咨询流程：咨询师详情页逻辑 ====================
         therapistCards.forEach(card => {
             card.addEventListener('click', function() {
                 const therapistId = parseInt(this.getAttribute('data-id'));
@@ -940,12 +1537,97 @@
                 // 切换到详情页
                 switchPage('therapistDetailPage');
 
-                // 绑定预约按钮事件
+                // 绑定预约按钮事件 - 跳转到预约表单
                 document.getElementById('goToBookingBtn').addEventListener('click', () => {
                     switchPage('bookingFormPage');
                 });
             });
         });
+
+        // ==================== 团体咨询流程：团体活动相关逻辑 ====================
+        // 渲染团体活动列表
+        function renderGroupList() {
+            groupListContainer.innerHTML = groupData.map(group => `
+                <div class="group-card" data-group-id="${group.id}">
+                    <div class="group-cover">
+                        <img src="${group.cover}" alt="${group.name}">
+                    </div>
+                    <div class="group-info">
+                        <span class="group-tag">${group.tag}</span>
+                        <h3 class="group-name">${group.name}</h3>
+                        <div class="group-meta">
+                            <div class="group-meta-item">⏰ ${group.time}</div>
+                            <div class="group-meta-item">👥 ${group.size}</div>
+                        </div>
+                        <p class="group-brief">${group.brief}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // 绑定点击事件
+            document.querySelectorAll('.group-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const groupId = parseInt(this.getAttribute('data-group-id'));
+                    renderGroupDetail(groupId);
+                });
+            });
+        }
+
+        // 渲染团体活动详情
+        function renderGroupDetail(groupId) {
+            const group = groupData.find(item => item.id === groupId);
+            
+            groupDetailContent.innerHTML = `
+                <div class="group-detail-cover">
+                    <img src="${group.cover}" alt="${group.name}">
+                </div>
+
+                <div class="group-detail-header">
+                    <span class="group-tag">${group.tag}</span>
+                    <h1 class="group-detail-title">${group.name}</h1>
+                    <div class="group-detail-meta">
+                        <div class="group-detail-meta-item">⏰ ${group.time}</div>
+                        <div class="group-detail-meta-item">📅 ${group.duration}</div>
+                        <div class="group-detail-meta-item">👥 ${group.size}</div>
+                        <div class="group-detail-meta-item">🧘 带领者：${group.leader}</div>
+                    </div>
+                    <div class="group-detail-price">${group.price}</div>
+                    <div class="group-detail-btns">
+                        <button class="btn" id="bookGroupBtn">立即预约</button>
+                        <button class="btn btn-outline" onclick="switchPage('groupListPage')">查看其他团体</button>
+                    </div>
+                </div>
+
+                <div class="detail-content-block">
+                    <h3 class="block-title">团体介绍</h3>
+                    <p class="info-content">${group.detail.replace(/\n/g, '<br><br>')}</p>
+                </div>
+
+                <div class="detail-content-block">
+                    <h3 class="block-title">团体安排</h3>
+                    <ul class="content-list">
+                        ${group.schedule.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="detail-content-block">
+                    <h3 class="block-title">适合人群</h3>
+                    <ul class="content-list">
+                        ${group.suitable.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            switchPage('groupDetailPage');
+
+            // 绑定预约按钮
+            document.getElementById('bookGroupBtn').addEventListener('click', () => {
+                switchPage('bookingFormPage');
+            });
+        }
+
+        // 初始化团体列表
+        renderGroupList();
     </script>
 </body>
 </html>
