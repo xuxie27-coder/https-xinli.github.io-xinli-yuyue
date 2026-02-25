@@ -129,10 +129,21 @@
             color: var(--primary-color);
         }
 
-        /* 金数据表单容器 - 完全适配你的代码 */
+       /* 金数据表单容器 - 优化融合感 */
         .jinshuju-wrapper {
             width: 100%;
             overflow: hidden;
+            border-radius: 12px; /* 加圆角，和网页整体风格一致 */
+            box-shadow: 0 2px 8px rgba(107, 155, 209, 0.1); /* 加淡淡的蓝色阴影 */
+            background: #ffffff;
+        }
+
+        /* 调整iframe本身的样式 */
+        .jinshuju-wrapper iframe {
+            display: block;
+            border: none;
+            width: 100% !important;
+            height: 1450px !important; /* 稍微加高一点，避免出现滚动条 */
         }
 
         /* 移动端适配 */
