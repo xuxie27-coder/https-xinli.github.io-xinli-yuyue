@@ -134,83 +134,24 @@
             color: var(--primary-color);
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        input, select, textarea {
+        /* 适配金数据表单的样式 */
+        .jinshuju-form {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        .form-row {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .form-col {
-            flex: 1;
-        }
-
-        /* 成功提示模态框 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: 15px;
-            text-align: center;
-            animation: popIn 0.3s ease;
-        }
-
-        .check-icon {
-            font-size: 4rem;
-            color: #67c23a;
-            margin-bottom: 1rem;
-        }
-
-        @keyframes popIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            min-height: 1428px; /* 匹配你嵌入脚本里的height */
+            overflow: hidden; /* 防止滚动条错乱 */
         }
 
         /* 移动端适配 */
         @media (max-width: 600px) {
             .hero { padding: 2rem; }
             .hero-text h1 { font-size: 2rem; }
-            .form-row { flex-direction: column; gap: 0; }
             .nav-links { display: none; } /* 移动端简化隐藏导航 */
+            .form-container { padding: 1.5rem; }
+            .jinshuju-form { min-height: 1200px; } /* 移动端适配高度 */
         }
     </style>
 </head>
 <body>
-
     <!-- 导航栏 -->
     <header>
         <nav>
@@ -243,56 +184,13 @@
     <section class="booking-section" id="booking">
         <div class="form-container">
             <h2>预约咨询</h2>
-            <script src="https://jsj.top/f/U8tRM9/embedded.js?inner_redirect=false&banner=show&background=white&height=1428"></script>
-            </form>
+            <!-- 金数据表单容器，确保脚本正常加载 -->
+            <div class="jinshuju-form">
+                <script src="https://jsj.top/f/U8tRM9/embedded.js?inner_redirect=false&banner=show&background=white&height=1428"></script>
+            </div>
         </div>
     </section>
 
-    <!-- 成功提示模态框 -->
-    <div class="modal" id="successModal">
-        <div class="modal-content">
-            <div class="check-icon">✓</div>
-            <h3>预约提交成功！</h3>
-            <p>我们的工作人员会在24小时内与您联系确认。</p>
-            <button class="btn" onclick="closeModal()">好的</button>
-        </div>
-    </div>
-
-    <script>
-        // 简单的交互逻辑
-        const form = document.getElementById('appointmentForm');
-        const modal = document.getElementById('successModal');
-
-        // 1. 设置日期选择器的最小值为今天
-        const dateInput = document.getElementById('date');
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.setAttribute('min', today);
-
-        // 2. 监听表单提交事件
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // 阻止表单默认的页面跳转
-
-            // 这里可以添加AJAX请求发送数据到服务器
-            // 现在仅做前端演示，直接显示成功
-            
-            showModal();
-            form.reset(); // 清空表单
-        });
-
-        function showModal() {
-            modal.style.display = 'flex';
-        }
-
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-
-        // 点击模态框外部也可以关闭
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-    </script>
+    <!-- 移除了无用的模态框和原表单JS（金数据自带提交反馈） -->
 </body>
 </html>
