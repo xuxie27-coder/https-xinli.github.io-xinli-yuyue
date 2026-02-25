@@ -9,7 +9,10 @@
             --primary-color: #6b9bd1;
             --secondary-color: #f0f7ff;
             --text-color: #333;
+            --light-text: #666;
             --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.05);
+            --card-shadow: 0 4px 20px rgba(107, 155, 209, 0.1);
         }
 
         * {
@@ -24,6 +27,66 @@
             color: var(--text-color);
             background-color: var(--secondary-color);
             overflow-x: hidden;
+        }
+
+        /* 通用按钮样式 */
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #5a8bc7;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            opacity: 0.7;
+        }
+
+        /* 页面通用容器 */
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
         }
 
         /* ==================== 名画轮播开场页样式 ==================== */
@@ -172,7 +235,7 @@
             border-radius: 5px;
         }
 
-        /* 预约按钮 */
+        /* 开场页预约按钮 */
         .booking-btn-landing {
             background: transparent;
             color: var(--white);
@@ -194,19 +257,7 @@
             box-shadow: 0 10px 30px rgba(255,255,255,0.2);
         }
 
-        /* ==================== 原网页内容样式 ==================== */
-        .main-content {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
-        }
-
-        .main-content.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* 头部导航 */
+        /* ==================== 头部导航 ==================== */
         header {
             background-color: var(--white);
             padding: 1rem 2rem;
@@ -217,7 +268,7 @@
         }
 
         nav {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -228,6 +279,7 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--primary-color);
+            cursor: pointer;
         }
 
         .nav-links a {
@@ -242,75 +294,201 @@
             color: var(--primary-color);
         }
 
-        /* 主视觉区域 */
-        .hero {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 3rem;
-            background: var(--white);
-            border-radius: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
+        /* ==================== 页面切换核心样式 ==================== */
+        .page {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            padding: 3rem 0;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==================== 咨询师列表页 ==================== */
+        .therapist-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
         }
 
-        .hero-text {
+        .therapist-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .therapist-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(107, 155, 209, 0.18);
+        }
+
+        .card-avatar {
+            width: 100%;
+            height: 380px;
+            overflow: hidden;
+        }
+
+        .card-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .therapist-card:hover .card-avatar img {
+            transform: scale(1.05);
+        }
+
+        .card-info {
+            padding: 1.5rem;
+        }
+
+        .card-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .card-school {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-desc {
+            color: var(--light-text);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        /* ==================== 咨询师详情页 ==================== */
+        .therapist-detail {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .detail-header {
+            display: flex;
+            gap: 3rem;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .detail-avatar {
+            width: 300px;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .detail-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-base-info {
             flex: 1;
             min-width: 300px;
         }
 
-        .hero-text h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
+        .detail-name {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
 
-        .hero-text p {
-            font-size: 1.1rem;
-            color: #666;
+        .detail-school {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            margin-bottom: 1rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .info-content {
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        .detail-btns {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .detail-content-block {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
             margin-bottom: 2rem;
         }
 
-        .btn {
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 12px 30px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.3s;
-            text-decoration: none;
-            display: inline-block;
+        .block-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--secondary-color);
         }
 
-        .btn:hover {
-            background-color: #5a8bc7;
-            transform: translateY(-2px);
+        .content-list {
+            list-style: none;
         }
 
-        /* 预约表单区域 */
-        .booking-section {
-            max-width: 800px;
-            margin: 4rem auto;
-            padding: 0 1rem;
+        .content-list li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.8rem;
+            color: var(--light-text);
         }
 
+        .content-list li::before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* ==================== 预约表单页 ==================== */
         .form-container {
             background: var(--white);
             padding: 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--primary-color);
-        }
-
-        /* 金数据表单容器 - 优化融合感 */
+        /* 金数据表单容器 */
         .jinshuju-wrapper {
             width: 100%;
             overflow: hidden;
@@ -326,22 +504,65 @@
             height: 1450px !important;
         }
 
-        /* 移动端适配 */
-        @media (max-width: 600px) {
-            .hero { padding: 2rem; }
-            .hero-text h1 { font-size: 2rem; }
-            .nav-links { display: none; }
-            .form-container { padding: 1.5rem; }
-            .painting-info { display: none; }
-            .carousel-container { height: 60vh; }
+        /* ==================== 移动端适配 ==================== */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 1.6rem;
+                margin-bottom: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .carousel-container {
+                height: 60vh;
+            }
+
             .carousel-arrow {
                 width: 40px;
                 height: 40px;
                 font-size: 1rem;
             }
-            .carousel-arrow.prev { left: 10px; }
-            .carousel-arrow.next { right: 10px; }
-            .booking-btn-landing { padding: 12px 36px; font-size: 1rem; }
+
+            .carousel-arrow.prev {
+                left: 10px;
+            }
+
+            .carousel-arrow.next {
+                right: 10px;
+            }
+
+            .painting-info {
+                display: none;
+            }
+
+            .booking-btn-landing {
+                padding: 12px 36px;
+                font-size: 1rem;
+            }
+
+            .detail-header {
+                padding: 1.5rem;
+                gap: 1.5rem;
+            }
+
+            .detail-avatar {
+                width: 100%;
+                height: 450px;
+            }
+
+            .detail-name {
+                font-size: 1.8rem;
+            }
+
+            .detail-content-block {
+                padding: 1.5rem;
+            }
+
+            .therapist-list {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -349,7 +570,6 @@
     <!-- ==================== 名画轮播开场页 ==================== -->
     <div class="landing-page" id="landingPage">
         <div class="carousel-container" id="carousel">
-            <!-- 轮播图片列表 - 已修正为真正的名画 -->
             <div class="carousel-list">
                 <!-- 第1张：梵高 星月夜 -->
                 <div class="carousel-item active">
@@ -385,59 +605,178 @@
                 </div>
             </div>
 
-            <!-- 左右箭头 -->
             <button class="carousel-arrow prev" id="prevBtn">‹</button>
             <button class="carousel-arrow next" id="nextBtn">›</button>
-
-            <!-- 底部圆点指示器 -->
             <div class="carousel-dots" id="dotsContainer"></div>
         </div>
 
         <button class="booking-btn-landing" id="startBookingBtn">开始预约</button>
     </div>
 
-    <!-- ==================== 原网页主内容 ==================== -->
-    <div class="main-content" id="mainContent">
-        <!-- 导航栏 -->
-        <header>
-            <nav>
-                <div class="logo">🌿 心灵港湾</div>
-                <div class="nav-links">
-                    <a href="#home">首页</a>
-                    <a href="#about">关于我们</a>
-                    <a href="#booking">预约咨询</a>
+    <!-- ==================== 头部导航 ==================== -->
+    <header>
+        <nav>
+            <div class="logo" id="homeLogo">🌿 心灵港湾</div>
+            <div class="nav-links">
+                <a href="#" id="navTherapistList">咨询师团队</a>
+                <a href="#about">关于我们</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ==================== 咨询师列表页 ==================== -->
+    <div class="page active" id="therapistListPage">
+        <div class="page-container">
+            <h2 class="section-title">专业咨询师团队</h2>
+            <div class="therapist-list">
+                <!-- 咨询师1 -->
+                <div class="therapist-card" data-id="1">
+                    <div class="card-avatar">
+                        <img src="https://images.unsplash.com/photo-1573497491208-6b1acb26004c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="林知夏 咨询师">
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-name">林知夏</h3>
+                        <div class="card-school">心理动力学取向 | 注册系统心理师</div>
+                        <p class="card-desc">12年临床咨询经验，擅长情绪困扰、创伤疗愈、亲密关系修复，累计个案时长10000+小时</p>
+                    </div>
                 </div>
-            </nav>
-        </header>
 
-        <!-- 主视觉区 -->
-        <section class="hero" id="home">
-            <div class="hero-text">
-                <h1>倾听你的心声</h1>
-                <p>在这里，你可以安全地表达自己。我们用专业与陪伴，助你走出心灵的迷雾。</p>
-                <a href="#booking" class="btn">立即预约</a>
-            </div>
-            <div class="hero-image">
-                <svg width="300" height="200" viewBox="0 0 300 200">
-                    <rect width="300" height="200" fill="#eef5ff" rx="20"/>
-                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#6b9bd1" font-size="20">心灵插画</text>
-                </svg>
-            </div>
-        </section>
+                <!-- 咨询师2 -->
+                <div class="therapist-card" data-id="2">
+                    <div class="card-avatar">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="陈越 咨询师">
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-name">陈越</h3>
+                        <div class="card-school">人本主义 | 婚姻家庭咨询师</div>
+                        <p class="card-desc">8年咨询经验，聚焦情绪疏导、人际关系、家庭矛盾与婚恋困扰，风格温暖包容，累计个案时长6000+小时</p>
+                    </div>
+                </div>
 
-        <!-- 预约表单区 -->
-        <section class="booking-section" id="booking">
+                <!-- 咨询师3 -->
+                <div class="therapist-card" data-id="3">
+                    <div class="card-avatar">
+                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="苏哲 咨询师">
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-name">苏哲</h3>
+                        <div class="card-school">认知行为CBT | 注册心理师</div>
+                        <p class="card-desc">10年临床经验，前三甲医院心理科咨询师，擅长焦虑抑郁、职场压力、社交恐惧，短程聚焦解决问题</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 咨询师详情页 ==================== -->
+    <div class="page" id="therapistDetailPage">
+        <div class="page-container">
+            <div class="back-btn" id="backToList">‹ 返回咨询师列表</div>
+            <div class="therapist-detail" id="detailContent">
+                <!-- 详情内容由JS动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 预约表单页 ==================== -->
+    <div class="page" id="bookingFormPage">
+        <div class="page-container">
+            <div class="back-btn" id="backToDetail">‹ 返回咨询师主页</div>
+            <h2 class="section-title">预约咨询</h2>
             <div class="form-container">
-                <h2>预约咨询</h2>
                 <div class="jinshuju-wrapper">
                     <iframe id="goldendata_form_U8tRM9" src="https://jsj.top/f/U8tRM9?background=white&banner=show&embedded=true&inner_redirect=false" width="100%" frameborder=0 allowTransparency="true" height="1428"></iframe>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 
-    <!-- 轮播逻辑 + 页面切换逻辑 -->
     <script>
+        // ==================== 咨询师数据 ====================
+        const therapistData = [
+            {
+                id: 1,
+                name: "林知夏",
+                avatar: "https://images.unsplash.com/photo-1573497491208-6b1acb26004c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                school: "心理动力学取向 | 中国心理学会注册系统注册心理师",
+                experience: "12年临床心理咨询经验",
+                totalHours: "累计个案时长 10000+小时",
+                qualification: [
+                    "国家二级心理咨询师",
+                    "中国心理学会注册系统注册心理师",
+                    "中美精神分析联盟（CAPA）高级组毕业",
+                    "北京大学临床心理学硕士"
+                ],
+                goodAt: [
+                    "抑郁、焦虑、强迫等情绪困扰疏导",
+                    "童年创伤、原生家庭关系疗愈",
+                    "亲密关系、婚姻情感矛盾修复",
+                    "自我认同、个人成长探索"
+                ],
+                training: [
+                    "中美精神分析联盟（CAPA）高级组、督导组系统培训",
+                    "创伤聚焦治疗（TF-CBT）连续培训",
+                    "依恋理论与夫妻治疗系统培训",
+                    "持续接受个人分析与个体督导，督导时长2000+小时"
+                ],
+                desc: "我始终相信，每个人都拥有自我疗愈的力量。咨询中，我会以抱持、中立的态度，陪你看见潜意识的模式，理解情绪背后的需求，在安全的咨访关系里，和你一起探索走出困境的路径。"
+            },
+            {
+                id: 2,
+                name: "陈越",
+                avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                school: "人本主义聚焦取向 | 国家二级婚姻家庭咨询师",
+                experience: "8年心理咨询经验",
+                totalHours: "累计个案时长 6000+小时",
+                qualification: [
+                    "国家二级心理咨询师",
+                    "国家二级婚姻家庭咨询师",
+                    "国际聚焦取向治疗师（FOT）",
+                    "中国心理卫生协会会员"
+                ],
+                goodAt: [
+                    "情绪压力、孤独感、低自尊疏导",
+                    "恋爱关系、婚姻矛盾、婚外情、分手疗愈",
+                    "亲子关系、家庭冲突、婆媳矛盾调解",
+                    "人际关系、社交边界、职场沟通困扰"
+                ],
+                training: [
+                    "国际聚焦取向治疗师连续3年系统培训",
+                    "萨提亚家庭治疗系统培训",
+                    "非暴力沟通（NVC）师资培训",
+                    "持续接受个体督导与团体督导"
+                ],
+                desc: "我的咨询风格温暖、包容且不评判，我相信每个人都是自己问题的专家。我会陪你看见自己的感受和需求，帮你梳理关系中的卡点，找到属于你自己的力量，在关系里既能真诚表达，也能守住边界。"
+            },
+            {
+                id: 3,
+                name: "苏哲",
+                avatar: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                school: "认知行为治疗（CBT）| 中国心理学会注册系统注册心理师",
+                experience: "10年临床心理咨询经验",
+                totalHours: "累计个案时长 8000+小时",
+                qualification: [
+                    "中国心理学会注册系统注册心理师",
+                    "前三甲医院心理科专职心理咨询师",
+                    "中国心理卫生协会CBT专业委员会委员",
+                    "北京师范大学心理学硕士"
+                ],
+                goodAt: [
+                    "焦虑症、抑郁症、强迫症等情绪障碍干预",
+                    "社交恐惧、职场压力、学业压力疏导",
+                    "失眠、拖延等行为问题调整",
+                    "青少年心理问题、亲子关系咨询"
+                ],
+                training: [
+                    "中国-贝克认知行为治疗研究院系统培训",
+                    "正念认知治疗（MBCT）连续培训",
+                    "青少年情绪与行为问题干预专项培训",
+                    "持续接受CBT专项督导与个人体验"
+                ],
+                desc: "我的咨询风格清晰、务实、结构化，擅长用循证的CBT方法，帮你快速识别情绪和行为的卡点，建立更适配的思维模式，用可落地的方法解决当下的困扰，同时提升你应对未来问题的心理能力。"
+            }
+        ];
+
         // ==================== 轮播核心逻辑 ====================
         const carouselItems = document.querySelectorAll('.carousel-item');
         const prevBtn = document.getElementById('prevBtn');
@@ -448,7 +787,7 @@
         let currentIndex = 0;
         let autoPlayTimer;
 
-        // 1. 生成底部圆点
+        // 生成底部圆点
         function initDots() {
             for (let i = 0; i < totalItems; i++) {
                 const dot = document.createElement('div');
@@ -459,37 +798,29 @@
             }
         }
 
-        // 2. 更新轮播状态
+        // 更新轮播状态
         function updateCarousel() {
-            // 切换图片激活状态
             carouselItems.forEach(item => item.classList.remove('active'));
             carouselItems[currentIndex].classList.add('active');
-
-            // 切换圆点激活状态
             const dots = document.querySelectorAll('.dot');
             dots.forEach(dot => dot.classList.remove('active'));
             dots[currentIndex].classList.add('active');
         }
 
-        // 3. 下一张
+        // 轮播控制
         function goToNext() {
             currentIndex = (currentIndex + 1) % totalItems;
             updateCarousel();
         }
-
-        // 4. 上一张
         function goToPrev() {
             currentIndex = (currentIndex - 1 + totalItems) % totalItems;
             updateCarousel();
         }
 
-        // 5. 自动轮播
+        // 自动轮播
         function startAutoPlay() {
-            // 每张图片停留5000毫秒=5秒，可自行修改这个数值
             autoPlayTimer = setInterval(goToNext, 5000);
         }
-
-        // 6. 停止自动轮播
         function stopAutoPlay() {
             clearInterval(autoPlayTimer);
         }
@@ -498,34 +829,122 @@
         initDots();
         startAutoPlay();
 
-        // 事件监听
+        // 轮播事件监听
         nextBtn.addEventListener('click', goToNext);
         prevBtn.addEventListener('click', goToPrev);
-
-        // 点击圆点切换图片
         dotsContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('dot')) {
                 currentIndex = parseInt(e.target.getAttribute('data-index'));
                 updateCarousel();
             }
         });
-
-        // 鼠标悬停暂停轮播，离开继续
         carousel.addEventListener('mouseenter', stopAutoPlay);
         carousel.addEventListener('mouseleave', startAutoPlay);
 
         // ==================== 页面切换逻辑 ====================
         const landingPage = document.getElementById('landingPage');
-        const mainContent = document.getElementById('mainContent');
+        const pages = document.querySelectorAll('.page');
         const startBookingBtn = document.getElementById('startBookingBtn');
+        const homeLogo = document.getElementById('homeLogo');
+        const navTherapistList = document.getElementById('navTherapistList');
+        const backToList = document.getElementById('backToList');
+        const backToDetail = document.getElementById('backToDetail');
+        const therapistCards = document.querySelectorAll('.therapist-card');
+        const detailContent = document.getElementById('detailContent');
 
+        // 切换页面函数
+        function switchPage(pageId) {
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // 开场页点击开始预约
         startBookingBtn.addEventListener('click', function() {
-            stopAutoPlay(); // 点击预约后停止轮播，释放资源
+            stopAutoPlay();
             landingPage.classList.add('hidden');
-            mainContent.classList.add('visible');
             setTimeout(() => {
                 landingPage.style.display = 'none';
-            }, 2000);
+            }, 800);
+            switchPage('therapistListPage');
+        });
+
+        // 导航栏返回列表
+        homeLogo.addEventListener('click', () => switchPage('therapistListPage'));
+        navTherapistList.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchPage('therapistListPage');
+        });
+
+        // 返回按钮
+        backToList.addEventListener('click', () => switchPage('therapistListPage'));
+        backToDetail.addEventListener('click', () => switchPage('therapistDetailPage'));
+
+        // 点击咨询师卡片，生成详情页
+        therapistCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const therapistId = parseInt(this.getAttribute('data-id'));
+                const therapist = therapistData.find(item => item.id === therapistId);
+                
+                // 生成详情页HTML
+                detailContent.innerHTML = `
+                    <div class="detail-header">
+                        <div class="detail-avatar">
+                            <img src="${therapist.avatar}" alt="${therapist.name} 咨询师">
+                        </div>
+                        <div class="detail-base-info">
+                            <h1 class="detail-name">${therapist.name}</h1>
+                            <div class="detail-school">${therapist.school}</div>
+                            
+                            <div class="info-item">
+                                <div class="info-label">从业经验</div>
+                                <div class="info-content">${therapist.experience} | ${therapist.totalHours}</div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-label">执业资质</div>
+                                <div class="info-content">
+                                    <ul class="content-list">
+                                        ${therapist.qualification.map(item => `<li>${item}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="detail-btns">
+                                <button class="btn" id="goToBookingBtn">立即预约</button>
+                                <button class="btn btn-outline" onclick="switchPage('therapistListPage')">查看其他咨询师</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-content-block">
+                        <h3 class="block-title">个人简介</h3>
+                        <p class="info-content">${therapist.desc}</p>
+                    </div>
+
+                    <div class="detail-content-block">
+                        <h3 class="block-title">擅长方向</h3>
+                        <ul class="content-list">
+                            ${therapist.goodAt.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="detail-content-block">
+                        <h3 class="block-title">受训背景</h3>
+                        <ul class="content-list">
+                            ${therapist.training.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+
+                // 切换到详情页
+                switchPage('therapistDetailPage');
+
+                // 绑定预约按钮事件
+                document.getElementById('goToBookingBtn').addEventListener('click', () => {
+                    switchPage('bookingFormPage');
+                });
+            });
         });
     </script>
 </body>
